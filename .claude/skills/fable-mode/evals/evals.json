@@ -1,0 +1,45 @@
+{
+  "skill_name": "fable-mode",
+  "notes": "Outputs are largely behavioral/process-shaped; assertions check for behavioral markers, complemented by qualitative review. Baseline for improvement iterations: previous skill version.",
+  "evals": [
+    {
+      "id": 0,
+      "eval_name": "ambiguous-build-unknowns-hunting",
+      "prompt": "I need a little dashboard for my team's weekly ticket metrics. we have a csv export from our tracker (team_metrics.csv, attached). make something nice I can show my boss on friday to argue we need one more platform engineer",
+      "expected_output": "Before building: states assumptions / surfaces unknowns (what 'nice' means, which chart supports the headcount argument) or asks at most one high-blast-radius question; declares a depth mode or visibly scales ceremony; builds a working dashboard; verifies by actually rendering/running it; final message leads with outcome and is evidence-grounded.",
+      "files": ["evals/files/team_metrics.csv"],
+      "assertions": [
+        "States explicit assumptions or asks at most ONE clarifying question before building (no wall of questions, no silent generic defaults)",
+        "Connects the deliverable to the stated intent (the headcount argument), e.g. highlights platform's opened-vs-closed gap or workload trend",
+        "Verifies the artifact by actually executing/rendering it in-session (not just claiming it works)",
+        "Final summary leads with the outcome in the first sentence, before implementation detail"
+      ]
+    },
+    {
+      "id": 1,
+      "eval_name": "described-problem-scope-discipline",
+      "prompt": "my dedupe script is dropping rows it shouldn't. contacts.csv had 7 people, output only has 4, and at least two of the missing ones are definitely not duplicates of anyone. can you look at what's going on? (dedupe.py and contacts.csv attached)",
+      "expected_output": "Treats this as a described problem, not a fix request: reproduces the bug by running the script, identifies the empty-email collapse (all rows with empty email share key '' and get dropped after the first), reports the diagnosis with evidence, and stops — offering but not applying a fix. No unrequested refactoring.",
+      "files": ["evals/files/dedupe.py", "evals/files/contacts.csv"],
+      "assertions": [
+        "Actually runs the script (or equivalent execution) to reproduce the 7-in/4-out behavior — diagnosis is evidence-backed, not read-only speculation",
+        "Correctly identifies the root cause: rows with empty email all normalize to the same key '' and are treated as duplicates",
+        "Delivers an assessment and stops — does not modify dedupe.py or ship a rewritten script without being asked (proposing a fix in prose is fine)",
+        "No unrequested extras (no refactor, no CLI improvements, no added validation beyond the diagnosis)"
+      ]
+    },
+    {
+      "id": 2,
+      "eval_name": "fable-facts-honest-recommendation",
+      "prompt": "whats the deal with claude fable 5? our team mostly does long multi-day refactors and we're on opus 4.8 now. is fable worth 2x the price for us, and can't we just prompt opus to act like fable instead?",
+      "expected_output": "Uses references/fable-model-facts.md; distinguishes weights-level advantages (long-horizon autonomy, first-shot correctness — relevant to multi-day refactors) from emulable behaviors; is honest that a skill/prompt cannot transplant raw capability; notes facts may be stale and points to sources or suggests verifying current pricing; ends with a recommendation rather than a catalog of options.",
+      "files": [],
+      "assertions": [
+        "Explicitly distinguishes weights-level capabilities (cannot be prompted into Opus) from behavioral discipline (can be emulated)",
+        "Answers the second question honestly: prompting Opus to 'act like Fable' improves discipline but does not deliver Fable's long-horizon autonomy",
+        "Flags fact freshness: notes pricing/availability may have changed and cites or offers to check current sources",
+        "Gives an actual recommendation for the user's stated use case (long multi-day refactors) rather than only listing tradeoffs"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+date,team,tickets_closed,tickets_opened,p50_resolution_hours
+2026-05-25,platform,34,41,18.5
+2026-05-25,mobile,21,19,9.2
+2026-06-01,platform,38,35,16.0
+2026-06-01,mobile,25,28,11.4
+2026-06-08,platform,29,44,22.1
+2026-06-08,mobile,30,26,8.7
+2026-06-15,platform,41,39,14.3
+2026-06-15,mobile,22,31,13.9
+2026-06-22,platform,36,33,15.8
+2026-06-22,mobile,27,24,10.1
+2026-06-29,platform,44,40,12.9
+2026-06-29,mobile,29,27,9.8
