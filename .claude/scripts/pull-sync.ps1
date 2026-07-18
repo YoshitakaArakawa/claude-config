@@ -20,11 +20,15 @@ if (-not (Test-Path $repoMirror)) {
 $targets = @()
 
 if ($Paths -and $Paths.Count -gt 0) {
+    # 明示指定は意図的な操作とみなし、除外リストを適用しない
     $targets = $Paths
 } else {
+    # 同期対象外 (auto-discovery のみ): アプリが machine-local なキーを書き込むファイル
+    $excluded = @('settings.json')
     $repoFiles = Get-ChildItem -Path $repoMirror -Recurse -File
     foreach ($f in $repoFiles) {
         $rel = $f.FullName.Substring($repoMirror.Length + 1)
+        if ($excluded -contains ($rel -replace '\\', '/')) { continue }
         $homePath = Join-Path $userHome $rel
         if (-not (Test-Path $homePath)) { continue }
         $repoHash = (Get-FileHash $f.FullName -Algorithm SHA256).Hash

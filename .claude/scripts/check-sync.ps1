@@ -13,8 +13,12 @@ if (-not (Test-Path $repoMirror)) { exit 0 }
 $drifts = New-Object System.Collections.Generic.List[object]
 $repoFiles = Get-ChildItem -Path $repoMirror -Recurse -File
 
+# 同期対象外: アプリが machine-local なキーを書き込むため drift が常態化するファイル
+$excluded = @('settings.json')
+
 foreach ($f in $repoFiles) {
     $rel = $f.FullName.Substring($repoMirror.Length + 1) -replace '\\', '/'
+    if ($excluded -contains $rel) { continue }
     $homePath = Join-Path $userHome $rel
     $repoMtime = $f.LastWriteTime.ToString('yyyyMMdd HH:mm')
 
