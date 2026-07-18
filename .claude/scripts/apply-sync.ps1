@@ -35,8 +35,11 @@ $repoFiles = Get-ChildItem -Path $repoMirror -Recurse -File
 $copied = 0
 $skipped = 0
 
-# 同期対象外: アプリが machine-local なキーを書き込むため上書きしてはならないファイル
-$excluded = @('settings.json')
+# 同期対象外: machine-local な内容を持つため上書きしてはならないファイル
+$excluded = @(
+    'settings.json'                                     # アプリが machine-local なキーを書き込む
+    'skills/tableau-research/references/env-facts.md'   # 実環境の値は ~/.claude/ 側で記入(repo はテンプレート)
+)
 
 foreach ($f in $repoFiles) {
     $rel = $f.FullName.Substring($repoMirror.Length + 1)

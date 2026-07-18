@@ -13,8 +13,11 @@ if (-not (Test-Path $repoMirror)) { exit 0 }
 $drifts = New-Object System.Collections.Generic.List[object]
 $repoFiles = Get-ChildItem -Path $repoMirror -Recurse -File
 
-# 同期対象外: アプリが machine-local なキーを書き込むため drift が常態化するファイル
-$excluded = @('settings.json')
+# 同期対象外: machine-local な内容を持つため drift が常態化するファイル
+$excluded = @(
+    'settings.json'                                     # アプリが machine-local なキーを書き込む
+    'skills/tableau-research/references/env-facts.md'   # 実環境の値は ~/.claude/ 側で記入(repo はテンプレート)
+)
 
 foreach ($f in $repoFiles) {
     $rel = $f.FullName.Substring($repoMirror.Length + 1) -replace '\\', '/'
