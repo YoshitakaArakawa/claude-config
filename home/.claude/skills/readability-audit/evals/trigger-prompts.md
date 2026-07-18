@@ -11,10 +11,11 @@ note: description・本文の修正時に fresh session で全プロンプトを
 - このレポートの可読性を確認して、必要なら直して
 - ブログ記事の下書きの認知負荷を下げたい
 - ドキュメントが読みにくいので構成から見直してほしい
+- この Skill の SKILL.md を読みやすくして
 
 ## 起動すべきでない（should not fire）
 
-- この Skill の SKILL.md を読みやすくして（→ creating-skills）
+- 重複している Skill を統廃合したい（→ context-audit）
 - リポの Agent 向け資産を棚卸しして（→ context-audit）
 - コードのコメントを整理して
 - 応答をもっと簡潔にして
