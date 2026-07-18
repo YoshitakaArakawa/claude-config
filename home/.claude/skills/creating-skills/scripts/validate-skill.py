@@ -11,6 +11,7 @@ creating-skills の検算ステップから実行する:
 - 可搬性: 絶対パス・memory リンク・トークン様文字列・メールアドレス (全 .md と scripts/ 配下)
 - SKILL.md フェンス内の非エスケープ置換構文 (メタスキルの罠)
 - references/*.md のメタデータブロックと目次
+- evals/trigger-prompts.md の存在 (警告のみ)
 
 終了コード: 0 = エラーなし (警告は許容) / 1 = エラーあり / 2 = 引数誤り
 
@@ -195,6 +196,17 @@ def check_references(skill_dir):
                 warn(rel, 1, f"{REF_TOC_LINES} 行超の reference に目次が無い (先頭 {TOC_SEARCH_LINES} 行以内に置く)")
 
 
+def check_evals(skill_dir):
+    # トリガー回帰テスト集 (writing-rules「テストと評価」)。無くても動作はするため警告に留める
+    evals_file = skill_dir / "evals" / "trigger-prompts.md"
+    if not evals_file.is_file():
+        warn(
+            skill_dir.name,
+            1,
+            "evals/trigger-prompts.md が無い (トリガー回帰テスト集。テンプレートは creating-skills の templates/evals-template.md)",
+        )
+
+
 def main():
     # Windows コンソールの既定 (cp932) では日本語メッセージ中の記号が encode できず
     # 落ちるため、stdout を UTF-8 に固定する
@@ -210,6 +222,7 @@ def main():
     check_skill_md(skill_dir)
     check_portability(skill_dir)
     check_references(skill_dir)
+    check_evals(skill_dir)
 
     for line in errors + warnings:
         print(line)
