@@ -35,8 +35,12 @@ $repoFiles = Get-ChildItem -Path $repoMirror -Recurse -File
 $copied = 0
 $skipped = 0
 
+# 同期対象外: アプリが machine-local なキーを書き込むため上書きしてはならないファイル
+$excluded = @('settings.json')
+
 foreach ($f in $repoFiles) {
     $rel = $f.FullName.Substring($repoMirror.Length + 1)
+    if ($excluded -contains ($rel -replace '\\', '/')) { continue }
     $dstPath = Join-Path $userHome $rel
     $dstDir = Split-Path $dstPath -Parent
 
