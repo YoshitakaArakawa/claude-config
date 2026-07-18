@@ -23,11 +23,8 @@ if ($Paths -and $Paths.Count -gt 0) {
     # 明示指定は意図的な操作とみなし、除外リストを適用しない
     $targets = $Paths
 } else {
-    # 同期対象外 (auto-discovery のみ): machine-local な内容を持つファイル
-    $excluded = @(
-        'settings.json'                                     # アプリが machine-local なキーを書き込む
-        'skills/tableau-research/references/env-facts.md'   # 実環境の値は ~/.claude/ 側で記入(repo はテンプレート)
-    )
+    # 同期対象外 (auto-discovery のみ): アプリが machine-local なキーを書き込むファイル
+    $excluded = @('settings.json')
     $repoFiles = Get-ChildItem -Path $repoMirror -Recurse -File
     foreach ($f in $repoFiles) {
         $rel = $f.FullName.Substring($repoMirror.Length + 1)
