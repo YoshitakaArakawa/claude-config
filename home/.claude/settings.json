@@ -2,7 +2,7 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "Bash",
+        "matcher": "Bash|PowerShell",
         "hooks": [
           {
             "type": "command",
@@ -11,5 +11,7 @@
         ]
       }
     ]
-  }
+  },
+  "agentPushNotifEnabled": true,
+  "skipWorkflowUsageWarning": true
 }
