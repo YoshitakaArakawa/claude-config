@@ -1,0 +1,14 @@
+{
+  "name": "config-plugins",
+  "description": "claude-config リポで管理するプラグイン",
+  "owner": {
+    "name": "config-plugins maintainers"
+  },
+  "plugins": [
+    {
+      "name": "explainer-video",
+      "source": "./plugins/explainer-video",
+      "description": "コードで描く解説動画の制作と、2 役のサブエージェントによるレビュー"
+    }
+  ]
+}

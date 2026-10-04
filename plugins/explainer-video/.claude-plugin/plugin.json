@@ -1,0 +1,10 @@
+{
+  "name": "explainer-video",
+  "version": "0.1.0",
+  "description": "HTML の seek(t) で解説動画を決定的に描いて書き出し、初見の視聴者役と出典の照合役の 2 つのサブエージェントでレビューして仕上げる",
+  "author": {
+    "name": "config-plugins maintainers"
+  },
+  "license": "MIT",
+  "keywords": ["video", "explainer", "playwright", "review"]
+}

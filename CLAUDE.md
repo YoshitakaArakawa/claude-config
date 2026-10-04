@@ -12,6 +12,9 @@
   - `scripts/apply-sync.ps1` — repo → `~/.claude/` 反映（PostToolUse で git commit 後に実行）
   - `scripts/pull-sync.ps1` — `~/.claude/` → repo の逆向き取り込み（手動）
   - `skills/sync-check/` — drift 詳細調査用 Skill（context: fork）
+- `.claude-plugin/marketplace.json` + `plugins/<name>/` — このRepoを marketplace として配布する Claude Code プラグイン。`home/.claude/` とは独立で、sync workflow の対象外。
+  - 自分の環境への導入：`claude plugin marketplace add <このRepoのパス>` → `claude plugin install <name>@config-plugins`。ローカルパスで追加した marketplace は配置場所のまま読まれ、編集は `/reload-plugins` で反映される。
+  - 変更後は `claude plugin validate .` と `claude plugin validate plugins/<name>` を通す。
 
 ## sync workflow
 
