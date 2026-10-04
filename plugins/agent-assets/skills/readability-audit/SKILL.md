@@ -42,7 +42,7 @@ description: Markdown 文書の可読性を診断し、読者の認知負荷が�
 
 - 外部から参照されている見出しアンカーを壊さない。壊す場合は参照元も追従させる
 - 用語・自称（「本リポジトリ」等）を文書内で統一する
-- Agent 向け資産を編集した場合は creating-skills 同梱の validate-skill.py を実行し、0 errors を確認する。description を変更した場合はトリガー回帰が必要になるため、その場で確認できなければ「未検証」として報告に明示する
+- Agent 向け資産を編集した場合は `python ${CLAUDE_PLUGIN_ROOT}/skills/creating-skills/scripts/validate-skill.py <対象 Skill のディレクトリ>` を実行し、0 errors を確認する。description を変更した場合はトリガー回帰が必要になるため、その場で確認できなければ「未検証」として報告に明示する
 
 **文書の種類による重み**
 

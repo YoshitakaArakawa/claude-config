@@ -30,5 +30,5 @@
 - `home/.claude/CLAUDE.md` の規範はこのRepoの作業にも適用される（user-scope CLAUDE.md は常時ロードされるため重複記載しない）。
 - **原則 `~/.claude/` 配下は直接編集しない**。編集は repo の `home/.claude/` 側で行い、commit すれば自動的に `~/.claude/` に反映される。直接編集すると drift を生み、次セッションの sync-check で resolution を迫られる。
 - `home/.claude/` 配下のファイルを編集するときは、配布先（他人の `~/.claude/`）でも動くように、絶対パス・個人情報・memory リンクを書かない（`home/.claude/CLAUDE.md` 「ファイル編集のガード」参照）。
-- Skill の作成・変更は `home/.claude/skills/creating-skills/` を参照してから着手。
+- Skill の作成・変更は `plugins/agent-assets/skills/creating-skills/` を参照してから着手。
 - SessionStart hook の出力に `[sync-check] Drift detected` が含まれていたら、必要に応じて `/sync-check` の invoke をユーザーに提案する（自動 invoke はしない）。

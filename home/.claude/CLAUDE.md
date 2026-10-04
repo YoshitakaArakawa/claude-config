@@ -58,7 +58,7 @@
 - 失敗・想定外は、ごまかさず最初に報告する。
 
 ## Skill関連タスク
-- Skillの作成・変更・評価・最適化を行う場合は、必ず `/creating-skills` スキルを参照してから着手する。
+- Skillの作成・変更・評価・最適化を行う場合は、必ず `/agent-assets:creating-skills` スキルを参照してから着手する。
 
 ## デフォルト前提：作業ディレクトリは Public 化されうる
 
@@ -81,4 +81,4 @@
 - **個人 PAT / トークン / API キー / メールアドレス**: いかなる形でも本文・コメント・サンプル・コミットメッセージに含めない。`.env` で管理し、テンプレートにはプレースホルダのみ。
 - **Git コミットの author/committer email**: Public 化されうるリポでは、コミットメタデータの email にも実メアドを使わない。GitHub なら `<numeric-id>+<username>@users.noreply.github.com` 形式を使う。Git のメタデータは本文ではないが、Public 化すると `git log` や public events API から永続露出する。基本は `git config --global user.email` を noreply に切り替え、例外 repo のみ local で上書きする。GitHub Desktop も同じ git config を読むので global 切替で両方カバーされる。
 
-これらは「うっかり」を防ぐためのデフォルト規範。例外を入れたいときは必ず明示的に許可を取る。Skill ファイルへの適用詳細は `creating-skills` skill の `references/writing-rules.md` を参照。
+これらは「うっかり」を防ぐためのデフォルト規範。例外を入れたいときは必ず明示的に許可を取る。Skill ファイルへの適用詳細は `agent-assets:creating-skills` skill の `references/writing-rules.md` を参照。

@@ -1,0 +1,10 @@
+{
+  "name": "agent-assets",
+  "version": "0.1.0",
+  "description": "Skill の作成・修正の規約とバリデータ、Agent 向け資産（CLAUDE.md・skills・hooks・settings）の横断監査、Markdown 文書の可読性改善",
+  "author": {
+    "name": "config-plugins maintainers"
+  },
+  "license": "MIT",
+  "keywords": ["skills", "audit", "readability", "claude-md"]
+}
