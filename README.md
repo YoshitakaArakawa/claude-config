@@ -10,5 +10,15 @@ Claude Code の user-scope な設定資産を管理する個人リポジトリ�
   - `hooks/` — user-scope の hook スクリプト
   - `skills/<name>/` — user-scope の Skill
 - `CLAUDE.md`（直下）— このRepo自身での作業方針
+- `.claude-plugin/marketplace.json` — このリポを Claude Code プラグインの marketplace（`config-plugins`）として公開する定義
+- `plugins/<name>/` — 配布するプラグイン
+  - `explainer-video` — コードで描く解説動画の制作と、2 役のサブエージェントによるレビュー
 
 このリポを正とし、`home/.claude/` 配下を手元の `~/.claude/` へコピーして反映する。
+
+## プラグインの導入
+
+```bash
+claude plugin marketplace add <owner>/<repo>
+claude plugin install explainer-video@config-plugins
+```

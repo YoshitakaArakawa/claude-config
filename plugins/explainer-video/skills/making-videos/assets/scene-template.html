@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>Explainer</title>
+<!-- display=block: render.cjs waits for document.fonts.ready, so no frame is drawn with a fallback font -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=block" rel="stylesheet">
+<style>
+:root{--bg:#f6f7f9;--ink:#1d2129;--mut:#6b7280;--line:#d5d9df;--accent:#3f6fb5;--warn:#a83632}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1920px;height:1080px;overflow:hidden;background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif}
+.scene{position:absolute;inset:0;opacity:0}
+.abs{position:absolute}
+.kicker{font-size:24px;letter-spacing:.1em;color:var(--mut);font-weight:500}
+.title{font-size:70px;font-weight:700;line-height:1.35;margin-top:18px}
+.head{font-size:46px;font-weight:700;line-height:1.45;margin-top:16px}
+.body{font-size:28px;line-height:1.75;margin-top:28px}
+.mut{color:var(--mut)}
+.panel{position:absolute;background:#fff;border-radius:8px;box-shadow:0 18px 50px rgba(20,30,50,.14);display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:700}
+.cap{position:absolute;font-size:22px;color:var(--mut);letter-spacing:.06em}
+</style>
+</head>
+<body>
+
+<!--
+  Timing contract
+  - <section class="scene" data-dur="8">: scene length in content seconds. Scenes play in document order.
+  - data-t="a" or data-t="a,b" on any element inside a scene: seconds from the scene start.
+    "a" alone stays until the scene ends, so no sentinel end value is needed.
+  - Per-scene motion that data-t cannot express goes in FX below, keyed by the scene id.
+-->
+
+<section class="scene" id="title" data-dur="6">
+  <div class="abs" style="left:160px;top:330px">
+    <div class="kicker" data-t="0.4">KICKER（何の話か）</div>
+    <div class="title" data-t="0.8">動画の主題を<br>体験の言葉で書く</div>
+    <div class="body mut" data-t="1.6">誰が何をしたかを、主語をつけて書く。</div>
+  </div>
+</section>
+
+<section class="scene" id="change" data-dur="10">
+  <div class="abs" style="left:160px;top:300px;width:760px">
+    <div class="kicker" data-t="0.3">V1 → V2</div>
+    <div class="head" data-t="0.5">「ここに実際の発言を引く」</div>
+    <div class="body mut" data-t="0.9">ユーザーの一言</div>
+    <div class="body" data-t="2">ユーザーの判断で、Claude が A を消した。<br>何が変わったかを具体で書く。</div>
+  </div>
+  <!-- same position, cross-fade: the change is seen in place -->
+  <div class="panel" id="before" style="left:1100px;top:240px;width:640px;height:520px">BEFORE</div>
+  <div class="panel" id="after" style="left:1100px;top:240px;width:640px;height:520px;opacity:0;color:var(--accent)">AFTER</div>
+  <div class="cap" style="left:1100px;top:780px" data-t="1">同じ位置で、変更前 → 変更後</div>
+</section>
+
+<section class="scene" id="end" data-dur="5">
+  <div class="abs" style="left:160px;top:400px">
+    <div class="kicker" data-t="0.4">END</div>
+    <div class="head" data-t="0.8">締めは具体で終える</div>
+  </div>
+</section>
+
+<script>
+// Video time = content time / SPEED. Change the overall pace here only.
+const SPEED = 1.0;
+// Blank between scenes: the previous scene is fully gone before the next appears.
+// Overlapping text is unreadable; ~1.5 s of blank reads as a stall, ~0.3 s does not.
+const GAP = 0.3;
+const SCENE_FADE = 0.4;
+const ITEM_FADE = 0.6;
+const ITEM_RISE = 20; // px an item rises while fading in
+
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const ease = x => 1 - Math.pow(1 - x, 3);
+const $ = id => document.getElementById(id);
+
+// Lay scenes out back to back from their data-dur.
+const SCENES = [];
+let cursor = 0;
+for (const el of document.querySelectorAll('section.scene')) {
+  const dur = Number(el.dataset.dur);
+  if (!(dur > 0)) throw new Error(`scene ${el.id} needs a positive data-dur`);
+  SCENES.push({ id: el.id, el, start: cursor, end: cursor + dur, items: [...el.querySelectorAll('[data-t]')] });
+  cursor += dur + GAP;
+}
+const CONTENT = cursor - GAP;
+
+// Per-scene motion. lt = content seconds since the scene start.
+const FX = {
+  change(lt) {
+    const x = ease(prog(lt, 3.5, 4.7));
+    $('before').style.opacity = (1 - x).toFixed(3);
+    $('after').style.opacity = x.toFixed(3);
+  },
+};
+
+function fadeItem(el, lt) {
+  const [a, b] = el.dataset.t.split(',').map(Number);
+  const pin = ease(prog(lt, a, a + ITEM_FADE));
+  const out = Number.isFinite(b) ? prog(lt, b - ITEM_FADE, b) : 0;
+  el.style.opacity = Math.min(pin, 1 - out).toFixed(3);
+  el.style.transform = `translateY(${((1 - pin) * ITEM_RISE).toFixed(1)}px)`;
+}
+
+function seekContent(t) {
+  for (const s of SCENES) {
+    const o = Math.min(prog(t, s.start, s.start + SCENE_FADE), 1 - prog(t, s.end - SCENE_FADE, s.end));
+    s.el.style.opacity = o.toFixed(3);
+    const lt = t - s.start;
+    s.items.forEach(el => fadeItem(el, lt));
+    if (FX[s.id]) FX[s.id](lt);
+  }
+}
+
+window.DURATION = CONTENT / SPEED;
+window.SCENES = SCENES.map(s => ({ id: s.id, start: s.start / SPEED, end: s.end / SPEED }));
+window.seek = t => seekContent(t * SPEED);
+seekContent(0);
+
+// Preview in a browser: scene.html#play loops in real time, scene.html#t=12.5 freezes at 12.5 s.
+const m = location.hash.match(/^#t=([\d.]+)$/);
+if (m) window.seek(Number(m[1]));
+if (location.hash === '#play') {
+  const t0 = performance.now();
+  const tick = () => { window.seek(((performance.now() - t0) / 1000) % window.DURATION); requestAnimationFrame(tick); };
+  tick();
+}
+</script>
+</body>
+</html>
