@@ -6,6 +6,11 @@
   },
   "plugins": [
     {
+      "name": "agent-assets",
+      "source": "./plugins/agent-assets",
+      "description": "Skill の作成規約と、Agent 向け資産・Markdown 文書の監査"
+    },
+    {
       "name": "explainer-video",
       "source": "./plugins/explainer-video",
       "description": "コードで描く解説動画の制作と、2 役のサブエージェントによるレビュー"

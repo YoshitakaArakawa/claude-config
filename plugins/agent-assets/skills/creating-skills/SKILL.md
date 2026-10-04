@@ -1,6 +1,6 @@
 ---
 name: creating-skills
-description: Skill を新規作成・修正・再構成する際の規約と参照先を集約する。SKILL.md やフロントマターを書こうとする場合、`.claude/skills/` 配下のファイルを扱う場合、ユーザーが「Skill を作りたい」「Skill を直したい」「Skill 化したい」「Skill を整理したい」と発言した場合、または subagent を呼び出す Skill を設計しようとする場合は、実装前に必ずこの Skill を参照すること。公式ベストプラクティスの要点と本リポジトリ独自の subagent 利用方針を提供する。
+description: Skill を新規作成・修正・再構成する際の規約と参照先を集約する。SKILL.md やフロントマターを書こうとする場合、`.claude/skills/` やプラグインの `skills/` 配下のファイルを扱う場合、ユーザーが「Skill を作りたい」「Skill を直したい」「Skill 化したい」「Skill を整理したい」と発言した場合、または subagent を呼び出す Skill を設計しようとする場合は、実装前に必ずこの Skill を参照すること。公式ベストプラクティスの要点と本リポジトリ独自の subagent 利用方針を提供する。
 ---
 
 # Creating Skills

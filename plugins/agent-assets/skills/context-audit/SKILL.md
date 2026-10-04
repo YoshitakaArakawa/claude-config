@@ -14,7 +14,7 @@ Agent のコンテキストに入る資産が「リポの目的に対して過�
 1. **監査対象を特定する**：固定リストにせず、コンテキストに入る経路から洗い出す——常時ロード（CLAUDE.md・AGENTS.md 等）、オンデマンド（skills 配下一式）、イベント駆動（hooks とその実行スクリプト）、subagent 定義（agents 配下）。リポ固有の配置（ミラー構成・wrapper 等）は README / CLAUDE.md から把握する
 2. **観点に沿って監査する**（次節）
 3. **報告する**（次々節）：発見だけでなく、それをどう直すかの方針まで決めて提示する
-4. **承認後、提示した方針どおりに修正し、検証する**：旧記述の残存 grep が 0 件になることを確認する。Skill を編集した場合は creating-skills 同梱の validate-skill.py が 0 errors になることも確認する
+4. **承認後、提示した方針どおりに修正し、検証する**：旧記述の残存 grep が 0 件になることを確認する。Skill を編集した場合は `python ${CLAUDE_PLUGIN_ROOT}/skills/creating-skills/scripts/validate-skill.py <対象 Skill のディレクトリ>` が 0 errors になることも確認する
 
 ## 監査の観点
 

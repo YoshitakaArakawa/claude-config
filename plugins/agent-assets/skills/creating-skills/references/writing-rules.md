@@ -3,6 +3,7 @@ purpose: Skill を書くときの規範を集約した実務リファレンス
 sources:
   - https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices
   - https://code.claude.com/docs/en/skills
+  - https://code.claude.com/docs/en/plugins/manifest-reference
 fetched_at: 2026-07-11
 source_last_known_update: 不明（取得時点の最新版）
 note: 公式ベストプラクティス（Anthropic Docs）と Claude Code Skills 仕様のうち、Skill を書くために必要な規範を集約したもの。subagent の `context: fork` 関連は SKILL.md 本文の「Subagent 利用方針」セクションを参照。いつ再取得すべきかは SKILL.md の「規範自体の鮮度管理」を参照。
@@ -59,7 +60,7 @@ Skill を書くときは「これは他人がインストールして読む配�
 - 小文字・数字・ハイフンのみ
 - 予約語禁止：`anthropic`, `claude`
 - XML タグ禁止
-- コマンド名（`/x`）は通常**ディレクトリ名**から決まり、`name` は一覧の表示ラベル（plugin ルート直下の SKILL.md のみ `name` がコマンド名になる）。上記の制約はディレクトリ名にも適用し、`name` とディレクトリ名は一致させる
+- コマンド名（`/x`）は通常**ディレクトリ名**から決まり、`name` は一覧の表示ラベル（plugin ルート直下の SKILL.md のみ `name` がコマンド名になる）。plugin 内の Skill は `/<plugin 名>:<ディレクトリ名>` で呼ばれる。上記の制約はディレクトリ名にも適用し、`name` とディレクトリ名は一致させる
 
 ### `description`
 - 1024 文字以内、空でない
@@ -141,6 +142,7 @@ SKILL.md 本文は invoke 時にレンダリングされ、以下の変数が置
 | `$name` | frontmatter `arguments` で宣言した名前付き引数（宣言順に位置対応） |
 | `${CLAUDE_SKILL_DIR}` | この SKILL.md のあるディレクトリ。同梱スクリプトの可搬な参照に使う |
 | `${CLAUDE_PROJECT_DIR}` | プロジェクトルート。`allowed-tools` 内でも展開される |
+| `${CLAUDE_PLUGIN_ROOT}` | plugin の Skill のみ。plugin のルート。同じ plugin 内の別 Skill や共通スクリプトの参照に使う |
 | `${CLAUDE_SESSION_ID}` | 現在のセッション ID |
 | `${CLAUDE_EFFORT}` | 現在のエフォートレベル |
 
@@ -291,7 +293,7 @@ disable-model-invocation: true
 ## スクリプト同梱時の規範
 
 ### 参照は `${CLAUDE_SKILL_DIR}` で書く
-SKILL.md からのスクリプト実行指示は `python ${CLAUDE_SKILL_DIR}/scripts/x.py` の形で書く。personal / project / plugin どのインストール先でも解決され、絶対パスを書かずに済む（「配布版から外すべきパターン」の絶対パス禁止と両立する公式手段）。
+SKILL.md からのスクリプト実行指示は `python ${CLAUDE_SKILL_DIR}/scripts/x.py` の形で書く。personal / project / plugin どのインストール先でも解決され、絶対パスを書かずに済む（「配布版から外すべきパターン」の絶対パス禁止と両立する公式手段）。同じ plugin 内の別 Skill に同梱されたスクリプトは `${CLAUDE_PLUGIN_ROOT}/skills/<skill 名>/scripts/x.py` で指す。
 
 ### 解決する、逃げ出さない
 スクリプトでエラー条件を明示的に処理する。Claude に投げ返さない。意味のあるエラーメッセージとフォールバック動作を実装する。
