@@ -1,6 +1,6 @@
 # claude-config Repo の方針
 
-このRepoは `~/.claude/` 配下の user-scope 資産（CLAUDE.md / settings.json / hooks / skills）を管理する個人リポジトリ。
+このRepoは `~/.claude/` 配下の user-scope 資産（CLAUDE.md / skills）と、Claude Code プラグインを管理する個人リポジトリ。
 
 ## 構造
 
@@ -18,7 +18,7 @@
 
 ## sync workflow
 
-**同期対象外**: `settings.json` は sync 対象から除外している（アプリが machine-local なキーを書き込むため drift が常態化する）。repo の `home/.claude/settings.json` は意図した hooks 設定の記録であり、`~/.claude/settings.json` への反映は手動で行う。逆向きに取り込みたいときだけ `pull-sync.ps1 -Paths settings.json` で明示的に pull する。
+**同期対象外**: `settings.json` は sync 対象から除外している（アプリが machine-local なキーを書き込むため drift が常態化する）。user-scope の hook は `commit-guard` プラグインが提供するので、`~/.claude/settings.json` に hook を手で登録しない。
 
 1. **セッション開始時**: `check-sync.ps1` が drift を検出して要約を context に流す。
 2. **drift があるとき**: ユーザー or Claude が `/sync-check` を invoke。subagent が forked context で詳細調査し、メインに要約と resolution options (A/B/C/D) を返す。メイン Claude は `AskUserQuestion` でユーザーに選択を聞き、選ばれた action を実行する。

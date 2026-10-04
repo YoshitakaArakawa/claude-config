@@ -1,0 +1,10 @@
+{
+  "name": "commit-guard",
+  "version": "0.1.0",
+  "description": "Claude が git commit する前にステージ差分を検査し、絶対パス・memory リンク・メールアドレス・トークンを含む追加行があれば commit を止める",
+  "author": {
+    "name": "config-plugins maintainers"
+  },
+  "license": "MIT",
+  "keywords": ["git", "commit", "hook", "privacy"]
+}
