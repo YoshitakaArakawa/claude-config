@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "pwsh -NoProfile -ExecutionPolicy Bypass -File \"$HOME/.claude/hooks/check-commit.ps1\""
+            "command": "pwsh -NoProfile -ExecutionPolicy Bypass -File \"${CLAUDE_PLUGIN_ROOT}/scripts/check-commit.ps1\""
           }
         ]
       }

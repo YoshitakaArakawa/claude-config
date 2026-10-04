@@ -1,0 +1,10 @@
+{
+  "name": "tableau",
+  "version": "0.1.0",
+  "description": "Tableau の技術調査（REST / Metadata / Hyper / Embedding API、TSC、tabcmd、TSM、Server / Cloud の運用）を、公式ドキュメントを一次情報として進めるためのルーティングと検証手順",
+  "author": {
+    "name": "config-plugins maintainers"
+  },
+  "license": "MIT",
+  "keywords": ["tableau", "research", "api"]
+}

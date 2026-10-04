@@ -14,6 +14,16 @@
       "name": "explainer-video",
       "source": "./plugins/explainer-video",
       "description": "コードで描く解説動画の制作と、2 役のサブエージェントによるレビュー"
+    },
+    {
+      "name": "commit-guard",
+      "source": "./plugins/commit-guard",
+      "description": "git commit 前にステージ差分の個人情報・絶対パス・トークンを検査する hook"
+    },
+    {
+      "name": "tableau",
+      "source": "./plugins/tableau",
+      "description": "Tableau の技術調査のルーティングと検証手順"
     }
   ]
 }
