@@ -5,6 +5,13 @@
 
 $ErrorActionPreference = 'Stop'
 
+# hook として起動されると、pwsh の標準入出力は OS の既定コードページになる。
+# Claude Code は UTF-8 で読み書きするので、日本語が化けないよう固定する。
+$utf8 = [System.Text.UTF8Encoding]::new($false)
+[Console]::InputEncoding = $utf8
+[Console]::OutputEncoding = $utf8
+$OutputEncoding = $utf8
+
 $raw = [Console]::In.ReadToEnd()
 if (-not $raw) { exit 0 }
 
