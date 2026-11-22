@@ -9,7 +9,7 @@ Claude Code の user-scope な設定資産を管理する個人リポジトリ�
 - `CLAUDE.md`（直下）— このRepo自身での作業方針
 - `.claude-plugin/marketplace.json` — このリポを Claude Code プラグインの marketplace（`config-plugins`）として公開する定義
 - `plugins/<name>/` — 配布するプラグイン
-  - `commit-guard` — Claude の git commit 前にステージ差分を検査する hook
+  - `commit-guard` — セッション開始時のリモート遅れ報告と、Claude の git commit 前のステージ差分検査を行う hook
   - `tableau` — Tableau の技術調査のルーティング（tableau-research）
   - `agent-assets` — Skill の作成規約（creating-skills）、Agent 向け資産の監査（context-audit）、Markdown の可読性改善（readability-audit）
   - `explainer-video` — コードで描く解説動画の制作と、2 役のサブエージェントによるレビュー

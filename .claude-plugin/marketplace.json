@@ -18,7 +18,7 @@
     {
       "name": "commit-guard",
       "source": "./plugins/commit-guard",
-      "description": "git commit 前にステージ差分の個人情報・絶対パス・トークンを検査する hook"
+      "description": "セッション開始時にリモートより遅れていないかを報告し、git commit 前にステージ差分の個人情報・絶対パス・トークンを検査する hook"
     },
     {
       "name": "tableau",
