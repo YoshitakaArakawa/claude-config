@@ -17,6 +17,13 @@ if (-not $raw) { exit 0 }
 
 try { $payload = $raw | ConvertFrom-Json } catch { exit 0 }
 
+# hook プロセスの作業ディレクトリは、セッションの作業ディレクトリと一致しないことがある
+# （worktree セッションなど）。ずれたまま `git diff --cached` を見ると差分が空になり、
+# 素通りしてしまうので、payload の cwd に移動してから検査する。
+if ($payload.cwd -and (Test-Path -LiteralPath $payload.cwd)) {
+    Set-Location -LiteralPath $payload.cwd
+}
+
 $cmd = $payload.tool_input.command
 if (-not $cmd) { exit 0 }
 
