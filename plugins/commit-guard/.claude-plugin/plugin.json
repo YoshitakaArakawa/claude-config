@@ -1,6 +1,6 @@
 {
   "name": "commit-guard",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Claude の git 作業を守る hook 集。セッション開始時にリモートより遅れていないかを報告し、git commit 前にはステージ差分の絶対パス・memory リンク・メールアドレス・トークンを検査して止める",
   "author": {
     "name": "config-plugins maintainers"
